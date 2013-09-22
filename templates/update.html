@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" /> 
+<head>
+<body>
+	<form action="/update" method="post">{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Submit" />
+	</form>
+{% if totalListing %}
+<div>
+	<span> Total Listing: </span> {{totalListing}}
+</div>
+<div>
+	<span> Total Received: </span> {{countListing}}
+</div>
+{% endif %}
+{% if totalSold %}
+<div>
+	<span> Total Sold: </span> {{totalSold}}
+</div>
+<div>
+	<span> Total Received: </span> {{countSold}}
+</div>
+{% endif %}
+<a href='/'> Go back to listing </a>
+</body>
+</html>

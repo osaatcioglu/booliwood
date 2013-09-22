@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" /> 
+<head>
+<body>
+<div>
+	<form action="/" method="post">{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Submit" />
+	</form>
+	<a href="/update"> Retrieve apartments from Booli.se </a>
+	{% if bostas %}
+	<div>count: {{bostas.count}}</div>
+	<table border="1">
+		<tr>
+		<td>published</td>
+		<td>listPrice</td>
+		<td>soldPrice</td>
+		<td>SEK/m2</td>
+		<td>soldDate</td>
+		<td>rooms</td>
+		<td>floor</td>
+		<td>livingArea</td>
+		<td>rent</td>
+		<td>constructionYear</td>
+		<td>Address</td>
+		</tr>
+		{% for bosta in bostas %}
+		{% if bosta.location.streetAddress != "Adress saknas" %}
+		{% load humanize %}
+		<tr>
+		<td>{{bosta.published}}</td>
+		<td>{{bosta.listPrice|intcomma}} SEK</td>
+		<td>{{bosta.soldPrice|intcomma}} SEK</td>
+		<td>{{bosta.sek_m2|intcomma}} SEK</td>
+		<td>{{bosta.soldDate}}</td>
+		<td>{{bosta.rooms}}</td>
+		<td>
+			{% if bosta.floor != 0 %}
+				{{bosta.floor}}
+			{% else %}
+				-
+			{% endif %}
+		</td>
+		<td>{{bosta.livingArea}}</td>
+		<td>{{bosta.rent|intcomma}} SEK</td>
+		<td>
+			{% if bosta.constructionYear != 1453 %}
+				{{bosta.constructionYear}}
+			{% else %}
+				-
+			{% endif %}
+		</td>
+		<td><a href="{{bosta.url}}">{{bosta.location.streetAddress}}</a></td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</table>
+	<div id="googleMap" style="width:500px;height:380px;"></div>
+{% endif %}
+</div>
+</body>
+</html>
